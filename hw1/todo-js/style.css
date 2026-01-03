@@ -148,6 +148,8 @@ h1 {
     overflow: hidden;
     transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Add padding to transition */
     word-wrap: break-word; /* Ensure long descriptions wrap */
+    font-size: 16px; /* Match input font size */
+    line-height: 1.5; /* Adjust line height for readability */
 }
 
 .todo-description.expanded {

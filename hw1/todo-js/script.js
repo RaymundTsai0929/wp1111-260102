@@ -23,9 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
             todoItem.classList.add('todo-item');
             todoItem.setAttribute('data-id', todo.id);
 
+            const titleContainer = document.createElement('div');
+            titleContainer.classList.add('todo-title-container');
+
             const todoTitle = document.createElement('div');
             todoTitle.classList.add('todo-title');
             todoTitle.textContent = todo.title;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent todo item from expanding/collapsing
+                todos = todos.filter(t => t.id !== todo.id);
+                renderTodos();
+            });
+
+            titleContainer.appendChild(todoTitle);
+            titleContainer.appendChild(deleteBtn);
 
             const todoDescription = document.createElement('div');
             todoDescription.classList.add('todo-description');
@@ -34,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             todoDescription.textContent = todo.description;
 
-            todoItem.appendChild(todoTitle);
+            todoItem.appendChild(titleContainer);
             todoItem.appendChild(todoDescription);
             todoItemsContainer.appendChild(todoItem);
 
-            todoTitle.addEventListener('click', () => {
+            titleContainer.addEventListener('click', () => {
                 todo.expanded = !todo.expanded;
                 renderTodos();
             });
@@ -64,4 +79,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderTodos();
 });
-

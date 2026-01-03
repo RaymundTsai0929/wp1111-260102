@@ -98,9 +98,15 @@ h1 {
     cursor: pointer;
 }
 
-.todo-title {
+.todo-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding-bottom: 5px; /* Add some space below the title */
+}
+
+.todo-title {
     font-weight: bold;
 }
 
@@ -132,7 +138,7 @@ h1 {
 }
 
 .todo-description {
-    padding: 10px;
+    padding: 0; /* Set initial padding to 0 */
     margin-top: 5px; /* Space between title and description */
     border-left: 3px solid #007bff;
     background-color: #e9f5ff; /* Light blue background for description */
@@ -140,12 +146,11 @@ h1 {
     border-bottom-right-radius: 4px;
     max-height: 0; /* Hidden by default */
     overflow: hidden;
-    transition: max-height 0.3s ease-out; /* Smooth transition for expansion */
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Add padding to transition */
     word-wrap: break-word; /* Ensure long descriptions wrap */
 }
 
 .todo-description.expanded {
     max-height: 200px; /* Adjust as needed for expanded height */
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px; /* Add padding when expanded */
 }

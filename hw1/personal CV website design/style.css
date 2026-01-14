@@ -1,0 +1,711 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Alike+Angular:400");
+@import url("https://fonts.googleapis.com/css?family=Alice:400");
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  min-height: 100%;
+  background-color: #000000; /* 全局背景黑底 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden; /* 防止出現不必要的橫向捲軸 */
+}
+
+/* 確保畫面寬度固定為 1920px 且置中 (Screen 1 改為等比縮放) */
+.screen-2,
+.screen-3,
+.screen-4 {
+  width: 1920px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* --- 第一個畫面樣式 (Screen 1 - 響應式滿版) --- */
+.screen-1 {
+  background-color: #ffffff;
+  width: 100vw; /* 強制佔滿瀏覽器寬度 */
+  height: 52.08vw; /* 920 / 1920 = 0.479... 但為了保險我先用 52vw */
+  height: calc(100vw * 920 / 1920);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.screen-1 .content-scaler {
+  width: 1920px;
+  height: 920px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px;
+  transform-origin: top center;
+  /* 預設縮放為 1，避免變數未讀取時消失 */
+  transform: scale(var(--screen-scale, 1)); 
+  z-index: 2;
+}
+
+.screen-1 .element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 920px;
+}
+
+.screen-1 .rectangle {
+  top: 0;
+  left: 0;
+  height: 546px;
+  background: linear-gradient(
+    360deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.75) 28%,
+    rgba(0, 0, 0, 0.85) 55%
+  );
+  position: absolute;
+  width: 1920px;
+}
+
+.screen-1 .raymund-tsai {
+  position: absolute;
+  top: 103px;
+  left: 0;
+  width: 1920px; /* 佔滿設計寬度以確保置中 */
+  text-align: center;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 72px;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+/* 大畫面最大化時增加 5px */
+body.is-large-screen .screen-1 .raymund-tsai {
+  font-size: 77px;
+}
+
+.screen-1 .text-wrapper {
+  position: absolute;
+  top: 275px;
+  left: 185px; /* (460 - 300) 讓中心點維持在 460px */
+  width: 600px; /* 加寬以確保文字增長時不會折行 */
+  text-align: center;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 64px;
+  letter-spacing: 0;
+  line-height: normal;
+  cursor: pointer;
+  transition: opacity 0.3s, font-size 0.3s ease;
+}
+
+.screen-1 .div {
+  position: absolute;
+  top: 275px;
+  left: 660px; /* (960 - 300) 讓中心點維持在 960px */
+  width: 600px;
+  text-align: center;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 64px;
+  letter-spacing: 0;
+  line-height: normal;
+  cursor: pointer;
+  transition: opacity 0.3s, font-size 0.3s ease;
+}
+
+.screen-1 .text-wrapper-2 {
+  position: absolute;
+  top: 275px;
+  left: 1134px; /* (1434 - 300) 讓中心點維持在 1434px */
+  width: 600px;
+  text-align: center;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 64px;
+  letter-spacing: 0;
+  line-height: normal;
+  cursor: pointer;
+  transition: opacity 0.3s, font-size 0.3s ease;
+}
+
+/* 大畫面最大化時增加 5px */
+body.is-large-screen .screen-1 .text-wrapper,
+body.is-large-screen .screen-1 .div,
+body.is-large-screen .screen-1 .text-wrapper-2 {
+  font-size: 69px;
+}
+
+.screen-1 .text-wrapper:hover,
+.screen-1 .div:hover,
+.screen-1 .text-wrapper-2:hover {
+  opacity: 0.7;
+}
+
+.screen-1 .rectangle-2 {
+  top: 790px;
+  left: 0px;
+  height: 131px;
+  transform: rotate(-180.00deg);
+  background: linear-gradient(
+    360deg,
+    rgba(243, 233, 236, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  position: absolute;
+  width: 1920px;
+}
+
+/* --- 第二個畫面樣式 (Screen 2 - 響應式縮小) --- */
+.screen-2 {
+  background-color: #000000;
+  width: 100%;
+  max-width: 1920px;
+  /* 高度隨寬度縮小，但最大維持 920px */
+  height: calc(min(100vw, 1920px) * 920 / 1920);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.screen-2 .content-scaler {
+  width: 1920px;
+  height: 920px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px;
+  transform-origin: top center;
+  /* 使用有上限的縮放比例 */
+  transform: scale(var(--content-scale, 1));
+  z-index: 2;
+}
+
+.screen-2 .rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 920px;
+  background-color: #000000;
+}
+
+.screen-2 .text-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 72px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+/* 最大化時增加 5px */
+body.is-large-screen .screen-2 .text-wrapper {
+  font-size: 77px;
+}
+
+.screen-2 .group {
+  left: 119px;
+  height: 725px;
+  position: absolute;
+  top: 171px;
+  width: 385px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen-2 .div {
+  width: 381px;
+  height: 251px;
+  background-color: #d9d9d9;
+  overflow: hidden; /* 隱藏超出邊界的圖片 */
+  position: relative;
+}
+
+.screen-2 .workplace-experience {
+  width: 385px;
+  height: 80px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 32px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+.screen-2 .rectangle-2 {
+  width: 381px;
+  height: 251px;
+  margin-top: 45px;
+  background-color: #d9d9d9;
+  overflow: hidden; /* 隱藏超出邊界的圖片 */
+  position: relative;
+}
+
+.screen-2 .text-wrapper-2 {
+  width: 385px;
+  height: 60px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+.screen-2 .group-2 {
+  left: 770px;
+  height: 725px;
+  position: absolute;
+  top: 171px;
+  width: 385px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen-2 .text-wrapper-3 {
+  width: 385px;
+  height: 60px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+.screen-2 .rectangle-3 {
+  width: 381px;
+  height: 251px;
+  margin-top: 65px;
+  background-color: #d9d9d9;
+  overflow: hidden; /* 隱藏超出邊界的圖片 */
+  position: relative;
+}
+
+/* 圖片縮放與隱藏多餘邊界設定 */
+.screen-2 .project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 關鍵：縮放寬度並填滿，多出來的部分會被裁切 */
+  display: block;
+}
+
+.screen-2 .text-wrapper-4 {
+  width: 385px;
+  height: 60px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+.screen-2 .group-3 {
+  left: 1421px;
+  height: 745px;
+  position: absolute;
+  top: 171px;
+  width: 385px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen-2 .text-wrapper-5 {
+  width: 385px;
+  height: 60px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+.screen-2 .other-works {
+  width: 385px;
+  height: 80px;
+  margin-top: 19px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 32px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+/* 最大化時增加 5px 的統一規則 */
+body.is-large-screen .screen-2 .workplace-experience,
+body.is-large-screen .screen-2 .other-works {
+  font-size: 37px;
+}
+
+body.is-large-screen .screen-2 .text-wrapper-2,
+body.is-large-screen .screen-2 .text-wrapper-3,
+body.is-large-screen .screen-2 .text-wrapper-4,
+body.is-large-screen .screen-2 .text-wrapper-5 {
+  font-size: 53px;
+}
+
+.screen-2 .rectangle-4 {
+  position: absolute;
+  top: 125px;
+  left: 1881px;
+  width: 10px;
+  height: 752px;
+  background-color: #d9d9d9;
+  border-radius: 22px;
+}
+
+.screen-2 .rectangle-5 {
+  position: absolute;
+  top: 126px;
+  left: 1882px;
+  width: 8px;
+  height: 234px;
+  background-color: #989898;
+  border-radius: 22px;
+}
+
+/* --- 第三個畫面樣式 (Screen 3 - 全寬背景與響應式縮小) --- */
+.screen-3 {
+  background-color: #ffffff;
+  width: 100%; /* 全寬 */
+  /* 高度隨內容比例變動，最高維持在 1840px */
+  height: calc(var(--content-scale, 1) * 1840px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.screen-3 .content-scaler {
+  width: 1920px;
+  height: 1840px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px;
+  transform-origin: top center;
+  /* 使用有上限的縮放比例 */
+  transform: scale(var(--content-scale, 1));
+  z-index: 2; /* 放在漸層前面 */
+}
+
+.screen-3 .rectangle {
+  position: absolute;
+  top: -1px; /* 往上移 1px */
+  left: 0;
+  width: 100%; /* 背景漸層永遠 100% 寬 */
+  /* 高度隨內容比例變動，最高維持在 131px */
+  height: calc(var(--content-scale, 1) * 131px);
+  background: linear-gradient(
+    360deg,
+    rgba(243, 233, 236, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  z-index: 1;
+}
+
+.screen-3 .div {
+  position: absolute;
+  bottom: -1px; /* 往下移 1px */
+  left: 0;
+  width: 100%; /* 背景漸層永遠 100% 寬 */
+  /* 高度隨內容比例變動，最高維持在 131px */
+  height: calc(var(--content-scale, 1) * 131px);
+  transform: rotate(-180.00deg);
+  background: linear-gradient(
+    360deg,
+    rgba(243, 233, 236, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  z-index: 1;
+}
+
+.screen-3 .text-wrapper {
+  position: absolute;
+  top: 118px;
+  left: 0;
+  width: 1920px; /* 全寬置中 */
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 72px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  transition: font-size 0.3s ease;
+}
+
+/* 僅 - - Goal - - 在最大化時增加 5px */
+body.is-large-screen .screen-3 .text-wrapper {
+  font-size: 77px;
+}
+
+.screen-3 .p {
+  position: absolute;
+  top: 1670px;
+  left: 667px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen-3 .element-task-goals {
+  position: absolute;
+  top: 363px;
+  left: 119px;
+  width: 1032px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen-3 .span {
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+.screen-3 .text-wrapper-2 {
+  font-size: 24px;
+}
+
+.screen-3 .text-wrapper-3 {
+  font-family: "Alice", Helvetica;
+  font-size: 24px;
+}
+
+.screen-3 .element-strategic-goals-AI {
+  position: absolute;
+  top: 777px;
+  left: 742px;
+  width: 1081px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen-3 .element-IDP {
+  position: absolute;
+  top: 1255px;
+  left: 119px;
+  width: 1081px;
+  font-family: "Alike Angular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen-3 .text-wrapper-4 {
+  font-size: 20px;
+}
+
+.screen-3 .rectangle-2 {
+  position: absolute;
+  top: 678px;
+  left: 365px;
+  width: 1190px;
+  height: 5px;
+  background-color: #00000099;
+}
+
+.screen-3 .rectangle-3 {
+  position: absolute;
+  top: 1154px;
+  left: 365px;
+  width: 1190px;
+  height: 5px;
+  background-color: #00000099;
+}
+
+/* --- 第四個畫面樣式 (Screen 4 - Bio) --- */
+.screen-4 {
+  background-color: #000000; /* 黑底 */
+  width: 100%;
+  /* 高度隨內容比例變動，最高維持在 920px */
+  height: calc(var(--content-scale, 1) * 920px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #ffffff; /* 文字白 */
+}
+
+.screen-4 .content-scaler {
+  width: 1920px;
+  height: 920px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px;
+  transform-origin: top center;
+  /* 使用有上限的縮放比例 */
+  transform: scale(var(--content-scale, 1));
+  z-index: 2;
+}
+
+/* 標題 - Bio - */
+.screen-4 .bio-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px; /* 全寬置中 */
+  text-align: center;
+  font-family: "Alike Angular", Helvetica;
+  font-size: 72px;
+  font-weight: 400;
+  margin: 0;
+  padding-top: 20px;
+  transition: font-size 0.3s ease;
+}
+
+/* 僅 - Bio - 在最大化時增加 5px */
+body.is-large-screen .screen-4 .bio-title {
+  font-size: 77px;
+}
+
+/* 左側圖片 */
+.screen-4 .bio-image {
+  position: absolute;
+  left: 119px;
+  top: 218px;
+  width: 593.33px;
+  height: 395.6px;
+  object-fit: cover;
+}
+
+/* 中間欄位：分類標題 */
+.screen-4 .categories {
+  position: absolute;
+  right: 782px; /* 距離最右邊 782px */
+  text-align: right;
+  width: 300px;
+}
+
+.screen-4 .category-item {
+  position: absolute;
+  width: 100%;
+  font-family: "Alike Angular", Helvetica;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.screen-4 .category-item .symbol {
+  font-size: 15px;
+  display: block;
+}
+
+.screen-4 .education { top: 187px; }
+.screen-4 .work-experience { top: 439px; }
+.screen-4 .internship { top: 695px; }
+
+/* 垂直分隔線 */
+.screen-4 .vertical-line {
+  position: absolute;
+  right: 732px; /* 距離右側 732px */
+  top: 150px;
+  width: 1px;
+  height: 702px;
+  background-color: #ffffff;
+}
+
+/* 右側詳細內容 */
+.screen-4 .details {
+  position: absolute;
+  right: 0;
+  left: calc(100% - 683px); /* 距離右側 683px 開始 */
+  text-align: left;
+}
+
+.screen-4 .detail-group {
+  position: absolute;
+  font-family: "Alike Angular", Helvetica;
+}
+
+.screen-4 .education-details { top: 187px; }
+.screen-4 .work-details { top: 439px; }
+.screen-4 .internship-details { top: 695px; }
+
+.screen-4 .university, .screen-4 .company {
+  font-size: 24px;
+}
+
+.screen-4 .detail-symbol {
+  font-size: 15px;
+}
+
+.screen-4 .major, .screen-4 .role {
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.screen-4 .secondary {
+  margin-top: 15px;
+}

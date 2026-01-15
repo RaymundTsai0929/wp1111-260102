@@ -57,8 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const page = target.getAttribute("data-page");
       if (page) {
-        // 設定 PDF 路徑並指定頁碼
-        iframe.src = `${pdfPath}#page=${page}`;
+        const newSrc = `${pdfPath}#page=${page}`;
+        
+        // 只有當頁碼不同時才更新 src
+        // 如果是同一個 PDF 檔案，瀏覽器通常只會處理 #page 跳轉而不重新下載
+        if (!iframe.src.includes(`${pdfPath}#page=${page}`)) {
+          iframe.src = newSrc;
+        }
+        
         modal.style.display = "block";
       }
     });
@@ -67,14 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) {
     closeBtn.onclick = () => {
       modal.style.display = "none";
-      iframe.src = "";
+      // 保持 src 不變，實現「只載入一次」
     };
   }
 
   window.onclick = (event) => {
     if (event.target == modal) {
       modal.style.display = "none";
-      iframe.src = "";
     }
   };
 });

@@ -57,24 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const page = target.getAttribute("data-page");
       if (page) {
+        // 設定 PDF 路徑並指定頁碼
+        iframe.src = `${pdfPath}#page=${page}`;
         modal.style.display = "block";
-        
-        // 判斷是否已經有載入過 PDF
-        const isPdfLoaded = iframe.src && iframe.src.includes(pdfPath);
-        
-        if (!isPdfLoaded) {
-          // 第一次載入：設定完整網址
-          iframe.src = `${pdfPath}#page=${page}`;
-        } else {
-          // 已經載入過：只修改 hash 觸發「內部翻頁」，不重新載入 PDF 閱讀器
-          try {
-            // 強制讓 iframe 內的 location.hash 變更
-            iframe.contentWindow.location.hash = `page=${page}`;
-          } catch (err) {
-            // 如果因為跨網域限制（雖然機率低）無法改 hash，則使用 src 切換
-            iframe.src = `${pdfPath}#page=${page}`;
-          }
-        }
       }
     });
   });
@@ -82,13 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) {
     closeBtn.onclick = () => {
       modal.style.display = "none";
-      // 保持 src，不重置，實現只載入一次
+      iframe.src = "";
     };
   }
 
   window.onclick = (event) => {
     if (event.target == modal) {
       modal.style.display = "none";
+      iframe.src = "";
     }
   };
 });

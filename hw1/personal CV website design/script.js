@@ -57,9 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const page = target.getAttribute("data-page");
       if (page) {
-        // 設定 PDF 路徑並指定頁碼
-        iframe.src = `${pdfPath}#page=${page}`;
+        // 先清空 src 並顯示視窗
+        iframe.src = "";
         modal.style.display = "block";
+        // 延遲設定新的路徑，強制瀏覽器重新導航至指定頁碼
+        setTimeout(() => {
+          iframe.src = `${pdfPath}#page=${page}`;
+        }, 50);
       }
     });
   });

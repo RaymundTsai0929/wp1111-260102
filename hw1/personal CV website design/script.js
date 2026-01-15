@@ -57,14 +57,21 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const page = target.getAttribute("data-page");
       if (page) {
-        // 直接更新 src 並顯示
-        // 為了確保瀏覽器會觸發頁碼跳轉，我們直接重新設定 src
-        const newSrc = `${pdfPath}#page=${page}`;
-        
-        // 如果 PDF 已經載入過，這行會觸發內部的頁碼跳轉
-        iframe.src = newSrc;
-        
+        // 先顯示 Modal 確保 iframe 是可見的
         modal.style.display = "block";
+        
+        const targetUrl = `${pdfPath}#page=${page}`;
+        
+        // 嘗試使用 location.replace 來觸發內部跳轉而不重新載入 viewer
+        try {
+          if (iframe.contentWindow) {
+            iframe.contentWindow.location.replace(targetUrl);
+          } else {
+            iframe.src = targetUrl;
+          }
+        } catch (err) {
+          iframe.src = targetUrl;
+        }
       }
     });
   });
@@ -72,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) {
     closeBtn.onclick = () => {
       modal.style.display = "none";
-      // 保持 src 不變，實現「快速重開」
+      // 保持 src，實現「只載入一次」
     };
   }
 

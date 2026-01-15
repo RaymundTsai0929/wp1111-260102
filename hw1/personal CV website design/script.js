@@ -57,13 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const page = target.getAttribute("data-page");
       if (page) {
+        // 直接更新 src 並顯示
+        // 為了確保瀏覽器會觸發頁碼跳轉，我們直接重新設定 src
         const newSrc = `${pdfPath}#page=${page}`;
         
-        // 只有當頁碼不同時才更新 src
-        // 如果是同一個 PDF 檔案，瀏覽器通常只會處理 #page 跳轉而不重新下載
-        if (!iframe.src.includes(`${pdfPath}#page=${page}`)) {
-          iframe.src = newSrc;
-        }
+        // 如果 PDF 已經載入過，這行會觸發內部的頁碼跳轉
+        iframe.src = newSrc;
         
         modal.style.display = "block";
       }
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeBtn) {
     closeBtn.onclick = () => {
       modal.style.display = "none";
-      // 保持 src 不變，實現「只載入一次」
+      // 保持 src 不變，實現「快速重開」
     };
   }
 
